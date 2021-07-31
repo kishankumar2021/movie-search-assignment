@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            margin: 5%;
+            /* border: 1px solid black; */
+            gap: 2%;
+           
+        }
+        #movie{
+            width: 300px;
+            height: 30px;
+            border-radius: 15px;
+            
+        }
+        #search{
+            width: 140px;
+            height: 30px;
+            border-radius: 5px;
+            background-color: #ff66b3;
+            color: #ffff;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>  
+     <div class="container">
+        <div class="child">
+            <input type="text" id="movie" placeholder="Enter movie name">
+            <button onclick="search()" id="search">SEARCH</button>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+
+      async function search() {
+        let movieName = document.getElementById("movie").value
+
+        try{
+            let res = await fetch(`http://www.omdbapi.com/?t=${movieName}&apikey=7deb030`)
+            let data = await res.json();
+
+            let data1 =  JSON.stringify(data)
+
+            var div = document.createElement('div')
+            document.body.appendChild(div)
+
+            div.setAttribute("style","border:1px solid black","color:green")
+
+            div.innerHTML=`${data1}`;
+
+            
+            console.log("data:",data);
+        }
+
+
+
+
+
+        catch(err){
+            console.log("err:",err)
+        }
+    }
+</script>
