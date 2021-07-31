@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .container{
+       display: inline-flex;
+      margin-left: 35%;
+        background-color: blanchedalmond;
+        width: 450px;
+        height: 150px;
+        border: 1px solid rgb(107, 187, 107);
+    }
+    .child{
+        display: flex;
+        align-items: center;
+       gap: 14%;
+       margin: 15%;
+    }
+    #movie{
+        border-radius: 8px;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="child">
+            <input type="text" id="movie" placeholder="Enter movie name">
+            <button onclick="search()" id="search">SEARCH</button>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+
+    async function search() {
+
+        try {
+            // var details=document.getElementById("movie");
+            var movieName = document.getElementById("movie").value
+            let res = await fetch(`http://www.omdbapi.com/?t=${movieName}&apikey=7deb030`)
+            let data = await res.json();
+
+           
+            var div = document.createElement('div')
+            var img = document.createElement('img')
+            var unvalid = document.createElement('img')
+            div.setAttribute("style","width:100px;","height:85px;")
+            document.body.appendChild(div)
+           img.src=data.Poster;
+           img.setAttribute("style","display:flex;","flex-direction:row;", "width:250px;","height:90px")
+           unvalid.src="https://thumbs.dreamstime.com/z/error-message-glitch-system-failure-vector-illustration-black-effect-background-104459290.jpg"
+           unvalid.setAttribute("style","width:250px;","height:250px;","margin:auto;")
+           if(data.Title==undefined){
+               document.body.appendChild(unvalid);
+           }
+           else
+           {
+
+
+           div.innerHTML =`
+           <span>Title:${data.Title}</span>
+           <span>Year:${data.Year}</p>
+           <spanp>language:${data.Language}</span>
+           <span>Rated:${data.Rated}</p>
+           <span>Released:${data.Released}</span>
+           
+           `;
+
+            div.appendChild(img);
+           
+           }
+            console.log("data:",data)
+        
+    }
+
+        catch(error){
+            console.log("error:",error)
+        }
+    }
+</script>
